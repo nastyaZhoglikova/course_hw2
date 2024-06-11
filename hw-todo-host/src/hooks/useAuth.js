@@ -7,7 +7,7 @@ export const useAuth = () => {
     localStorage.removeItem("isAuthenticated");
   };
 
-  const isLogged = () => localStorage.getItem("isAuthenticated") === "true";
+  const isLogged = () => localStorage.getItem("sb-sfxhowhcuxkrbzvmttct-auth-token");
 
   return { signIn, signOut, isLogged };
 };

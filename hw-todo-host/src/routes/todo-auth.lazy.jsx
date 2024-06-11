@@ -1,12 +1,13 @@
 import {createFileRoute, useRouter, useNavigate} from "@tanstack/react-router";
-import {createClient} from "@supabase/supabase-js";
+// import {createClient} from "@supabase/supabase-js";
+import supabase from '../utils/supabase.js'
 
-export const Route = createFileRoute('/login')({
+export const Route = createFileRoute('/todo-auth')({
   component: Login,
 });
 
 function Login() {
-  const supabase = createClient(import.meta.env.VITE_SUPABASE_URL, import.meta.env.VITE_SUPABASE_KEY);
+  // const supabase = createClient(import.meta.env.VITE_SUPABASE_URL, import.meta.env.VITE_SUPABASE_KEY);
   const router = useRouter();
   const navigate = useNavigate();
 

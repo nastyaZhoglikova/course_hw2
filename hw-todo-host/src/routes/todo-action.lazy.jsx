@@ -1,17 +1,24 @@
-// todolist.jsx
-import { createLazyFileRoute } from "@tanstack/react-router";
+import {createLazyFileRoute, redirect} from '@tanstack/react-router'
 import React from "react";
 
-const TodoListLazy = React.lazy(() => import("todolist/TodoList"));
+const TodoActionLazy = React.lazy(() => import("action/TodoAction"));
 
-export const TodoList = () => {
+const TodoAction = () => {
   return (
     <div className="movies-container">
-      <TodoListLazy />
+      <TodoActionLazy />
     </div>
   );
 };
 
-export const Route = createLazyFileRoute("/todolist")({
-  component: TodoList,
+export const Route = createLazyFileRoute("/todo-action")({
+  beforeLoad: ({ context }) => {
+    const { isLogged } = context.authentication;
+    if(!isLogged()) {
+      throw redirect({
+        to: '/todo-auth'
+      })
+    }
+  },
+  component: TodoAction,
 });

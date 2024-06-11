@@ -1,10 +1,8 @@
 import { createFileRoute } from '@tanstack/react-router'
 
-
 import { Route as rootRoute } from './routes/__root.jsx'
 // import { Route as LoginImport } from './routes/login'
 import { Route as AuthenticatedImport } from './routes/_authenticated'
-
 
 const TodoListLazyImport = createFileRoute('/todolist')()
 const TodoActionLazyImport = createFileRoute('/todoaction')()

@@ -1,16 +1,19 @@
 import {createRootRoute, Link, Outlet} from '@tanstack/react-router';
 import {TanStackRouterDevtools} from '@tanstack/router-devtools';
-import '../styles.css';
+import '../index.css';
 import {useEffect, useState} from "react";
 import {Auth} from "@supabase/auth-ui-react";
 import {ThemeSupa} from "@supabase/auth-ui-shared";
-import {createClient} from "@supabase/supabase-js";
+import supabase from '../utils/supabase.js'
 
 
 export const Route = createRootRoute({
     component: () => {
         const [session, setSession] = useState(null)
-        const supabase = createClient(import.meta.env.VITE_SUPABASE_URL, import.meta.env.VITE_SUPABASE_KEY);
+
+      console.log(11111)
+      console.log(session)
+      // const supabase = createClient(, );
 
 
       useEffect(() => {
@@ -36,13 +39,13 @@ export const Route = createRootRoute({
                         <Link to="/" className="[&.active]:font-bold">
                             Home
                         </Link>
-                        <Link to="/todolist" className="[&.active]:font-bold">
+                        <Link to="/todo-list" className="[&.active]:font-bold">
                             Todo List
                         </Link>
-                        <Link to="/todoaction" className="[&.active]:font-bold">
+                        <Link to="/todo-action" className="[&.active]:font-bold">
                             Todo Action
                         </Link>
-                        <Link to="/login" className="[&.active]:font-bold">
+                        <Link to="/todo-auth" className="[&.active]:font-bold">
                             Login
                         </Link>
                     </div>
