@@ -57,7 +57,7 @@ body {
   border-radius: 10px;
   overflow: hidden;
   width: 210px;
-  height: 280px;
+  height: 100px;
 }
 
 .card.style_1 .image {
@@ -94,15 +94,13 @@ body {
 
 .card.style_1 .content {
   width: 100%;
-  padding: 26px 10px 12px;
   position: relative;
   white-space: normal;
   display: flex;
   align-content: flex-start;
-  flex-wrap: wrap;
   justify-content: center;
-  height: calc(100% - 298px);
-  align-content: space-between;
+  flex-direction: column;
+  height: 100px;
 }
 
 .card.style_1 .content h2 {
@@ -124,7 +122,7 @@ body {
   margin: 0;
   padding: 0;
   color: rgba(255, 255, 255, 0.6);
-  height: 170px;
+  height: 100px;
   text-overflow: ellipsis;
   overflow: hidden;
 }
@@ -162,4 +160,18 @@ button {
 
 button:hover {
   background-color: #3498db;
+}
+
+.buttons-card {
+  margin-bottom: 16px;
+}
+.button {
+  margin-left: 6px;
+  margin-right: 6px;
+}
+.text-left {
+  text-align: left;
+}
+.title {
+  font-weight: bold;
 }

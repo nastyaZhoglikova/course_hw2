@@ -1,14 +1,13 @@
 import React, { useEffect } from "react";
 import {useTodoListStore, useGetData} from "../store/todo-list.js";
 import "./List.css";
-// import { useLocation, Link } from 'react-router-dom'
-
 
 const List = () => {
-  const { list, getAll, orderByPriority } = useTodoListStore(
+  const { list, getAll, orderByPriority, filterByPriority } = useTodoListStore(
     (state) => ({
       list: state.data,
-      orderByPriority: state.orderList,
+      orderByPriority: state.orderListByPriority,
+      filterByPriority: state.filerListByStatus,
       getAll: state.execute,
     })
   );
@@ -17,35 +16,39 @@ const List = () => {
     getAll();
   }, []);
 
-  console.log(list)
-
   return (
     <div>
-      <div className="todo-list">
+      <div className="buttons-card">
         <button
+          className="button"
           onClick={() => orderByPriority()}
         >
           Order By Priority
         </button>
-
+        <button
+          className="button"
+          onClick={() => filterByPriority()}
+        >
+          Show finished
+        </button>
+        <button
+          className="button"
+          onClick={() => getAll()}
+        >
+          Show all
+        </button>
+      </div>
+      <div className="todo-list">
 
         {(list)?.map((item) => (
           <div key={item.id} className="card style_1">
-            <div className="content">
-              <h2>{item.title}</h2>
-              <div>{item.priority}</div>
+            <div className="title">{item.title}</div>
+            <div className="content text-left">
+              <div>Priority {item.priority}/5</div>
               <div>{item.date_done}</div>
-              <div>{item.status}</div>
+              <div>{item.status ? 'Finished' : 'Created'}</div>
+              <div>{item.text}</div>
 
-              {/*<button*/}
-              {/*  onClick={() =>*/}
-              {/*    isInWatchlist(movie.id)*/}
-              {/*      ? removeFromWatchlist(movie.id)*/}
-              {/*      : addToWatchlist(movie)*/}
-              {/*  }*/}
-              {/*>*/}
-              {/*  {isInWatchlist(movie.id) ? "Remove" : "Add to Watchlist"}*/}
-              {/*</button>*/}
             </div>
           </div>
         ))}

@@ -11,7 +11,8 @@ const initialState = {
   error: false,
   data: null,
   errorData: null,
-  order: 'id'
+  order: 'id',
+  filter: 'id'
 };
 
 export const useTodoListStore = create((set, get) => ({
@@ -72,11 +73,10 @@ export const useTodoListStore = create((set, get) => ({
       console.error("Error removing movie from watchlist:", error);
     }
   },
-  orderList: async () => {
+  orderListByPriority: async () => {
     set({ ...initialState, order: 'priority' });
 
     try {
-
       const { data } = await supabase
         .from('todos')
         .select()
@@ -84,7 +84,22 @@ export const useTodoListStore = create((set, get) => ({
 
       set({ ...initialState, success: true, data });
 
-      // set({ ...initialState, success: true, data });
+    } catch (err) {
+      console.error("Error in data fetch:", err);
+      set({ ...initialState, error: true, errorData: err.message });
+    }
+  },
+  filerListByStatus: async () => {
+    set({ ...initialState, filter: 'status' });
+
+    try {
+      const { data } = await supabase
+        .from("todos")
+        .select()
+        .eq('status', true)
+
+      set({ ...initialState, success: true, data });
+
     } catch (err) {
       console.error("Error in data fetch:", err);
       set({ ...initialState, error: true, errorData: err.message });
@@ -95,11 +110,10 @@ export const useTodoListStore = create((set, get) => ({
     set({ ...initialState, loading: true });
     try {
       const orderType = get().order
-      console.log(orderType)
+
       const { data } = await supabase
         .from('todos')
         .select()
-        .order(orderType, { ascending: true });
 
       set({ ...initialState, success: true, data });
     } catch (err) {
