@@ -47,7 +47,7 @@ export const useTodoListStore = create((set, get) => ({
       console.error("Error adding movie to watchlist:", error);
     }
   },
-  deleteTodo: async (movieId) => {
+  deleteTodo: async (todoId) => {
     try {
       // Make a DELETE request to the API endpoint to remove the movie from the watchlist
       const response = await api.post(
@@ -105,12 +105,28 @@ export const useTodoListStore = create((set, get) => ({
       set({ ...initialState, error: true, errorData: err.message });
     }
   },
+  finishedTodo: async (todoId) => {
+    set({ ...initialState, filter: 'status' });
+
+    try {
+      const { data, error } = await supabase
+        .from("todos")
+        .update({ status: true })
+        .eq("id", todoId);
+
+      if (!error) get().execute()
+
+      set({ ...initialState, success: true, data });
+
+    } catch (err) {
+      console.error("Error in data fetch:", err);
+      set({ ...initialState, error: true, errorData: err.message });
+    }
+  },
 
   execute: async () => {
     set({ ...initialState, loading: true });
     try {
-      const orderType = get().order
-
       const { data } = await supabase
         .from('todos')
         .select()
