@@ -17,36 +17,6 @@ const initialState = {
 
 export const useTodoListStore = create((set, get) => ({
   ...initialState,
-  addTodo: async (todo) => {
-    const { todoList } = get();
-    try {
-      // const { data, error } = await supabase.from("todos").insert({
-      //   ...todoItem,
-      //   created_at: new Date().toISOString(),
-      // });
-
-      // Make a POST request to the API endpoint to add the movie to the watchlist
-      const response = await api.post(
-        "todos",
-        { todo },
-        {
-          headers: {
-            Authorization: `Bearer ${import.meta.env.VITE_ACCESS_TOKEN}`,
-          },
-        }
-      );
-
-      // If the API request is successful, update the local watchlist state
-      if (response.status === 201) {
-        set({ watchlist: [...watchlist, movie] });
-      } else {
-        // Handle the error case
-        console.error("Failed to add movie to watchlist:", response.data);
-      }
-    } catch (error) {
-      console.error("Error adding movie to watchlist:", error);
-    }
-  },
   deleteTodo: async (todoId) => {
     set({ ...initialState, filter: 'status' });
 
@@ -115,7 +85,6 @@ export const useTodoListStore = create((set, get) => ({
       set({ ...initialState, error: true, errorData: err.message });
     }
   },
-
   execute: async () => {
     set({ ...initialState, loading: true });
     try {
@@ -130,25 +99,4 @@ export const useTodoListStore = create((set, get) => ({
     }
   },
 
-}));
-
-export const useGetData = create((set, get) => ({
-  ...initialState,
-
-  execute: async () => {
-    set({ ...initialState, loading: true });
-    try {
-      const orderType = get().order
-      console.log(orderType)
-      const { data } = await supabase
-        .from('todos')
-        .select()
-        .order(orderType, { ascending: true });
-
-      set({ ...initialState, success: true, data });
-    } catch (err) {
-      console.error("Error in data fetch:", err);
-      set({ ...initialState, error: true, errorData: err.message });
-    }
-  },
 }));

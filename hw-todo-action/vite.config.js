@@ -12,7 +12,7 @@ export default defineConfig({
       exposes: {
         "./TodoAction": "./src/App.jsx",
       },
-      shared: ["react", "react-dom"],
+      shared: ["react", "react-dom", 'axios', 'zustand', '@supabase/supabase-js'],
     }),
   ],
   build: {
