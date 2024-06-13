@@ -1,14 +1,16 @@
 import React, { useEffect } from "react";
-import {useTodoListStore, useGetData} from "../store/todo-list.js";
+import { useTodoListStore } from "../store/todo-list.js";
 import "./List.css";
 
 const List = () => {
-  const { list, getAll, orderByPriority, filterByPriority, finished } = useTodoListStore(
+  const { list, filter, getAll, orderByPriority, filterByPriority, finishItem, deleteItem } = useTodoListStore(
     (state) => ({
       list: state.data,
+      filter: state.filter,
       orderByPriority: state.orderListByPriority,
       filterByPriority: state.filerListByStatus,
-      finished: state.finishedTodo,
+      finishItem: state.finishedTodo,
+      deleteItem: state.deleteTodo,
       getAll: state.execute,
     })
   );
@@ -27,13 +29,13 @@ const List = () => {
           Order By Priority
         </button>
         <button
-          className="button"
+          className={filter !== 'id' ? 'active button' : 'button'}
           onClick={() => filterByPriority()}
         >
-          Show finished
+          Show finished {filter}
         </button>
         <button
-          className="button"
+          className={filter === 'id' ? 'active button' : 'button'}
           onClick={() => getAll()}
         >
           Show all
@@ -53,12 +55,18 @@ const List = () => {
                 !item.status && (
                   <button
                     className="button"
-                    onClick={() => finished(item.id)}
+                    onClick={() => finishItem(item.id)}
                   >
                     Finished
                   </button>
                 )
               }
+              <button
+                className="button"
+                onClick={() => deleteItem(item.id)}
+              >
+                Delete
+              </button>
             </div>
           </div>
         ))}

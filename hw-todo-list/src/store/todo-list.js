@@ -48,29 +48,21 @@ export const useTodoListStore = create((set, get) => ({
     }
   },
   deleteTodo: async (todoId) => {
-    try {
-      // Make a DELETE request to the API endpoint to remove the movie from the watchlist
-      const response = await api.post(
-        "account/21271511/watchlist",
-        { media_type: "movie", media_id: movieId, watchlist: false },
-        {
-          headers: {
-            Authorization: `Bearer ${import.meta.env.VITE_ACCESS_TOKEN}`,
-          },
-        }
-      );
+    set({ ...initialState, filter: 'status' });
 
-      // If the API request is successful, update the local watchlist state
-      if (response.status === 200) {
-        set((state) => ({
-          watchlist: state.watchlist.filter((movie) => movie.id !== movieId),
-        }));
-      } else {
-        // Handle the error case
-        console.error("Failed to remove movie from watchlist:", response.data);
-      }
-    } catch (error) {
-      console.error("Error removing movie from watchlist:", error);
+    try {
+      const { data, error } = await supabase
+        .from("todos")
+        .delete()
+        .eq("id", todoId);
+
+      if (!error) get().execute()
+
+      set({ ...initialState, success: true, data });
+
+    } catch (err) {
+      console.error("Error in data fetch:", err);
+      set({ ...initialState, error: true, errorData: err.message });
     }
   },
   orderListByPriority: async () => {
