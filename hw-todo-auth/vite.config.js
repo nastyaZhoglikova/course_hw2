@@ -12,7 +12,7 @@ export default defineConfig({
       exposes: {
         "./TodoAuth": "./src/App.jsx",
       },
-      shared: ["react", "react-dom"],
+      shared: ["react", "react-dom", '@supabase/supabase-js'],
     }),
   ],
   build: {
