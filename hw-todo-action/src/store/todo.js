@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import axios from "axios";
 import supabase from '../utils/supabase.js'
+// import { useNavigate } from "react-router-dom";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 const api = axios.create({ baseURL: BASE_URL });
@@ -15,24 +16,9 @@ const initialState = {
 
 export const useTodoStore = create((set, get) => ({
   ...initialState,
+
   addTodo: async (todo) => {
-    // const title = formData.get("title");
-    // const text = formData.get("text");
-    // const priority = formData.get("priority");
-    // const date_done = formData.get("date");
-
-    // if (!title && !text) {
-    //   return;
-    // }
-
-    // const todoItem = {
-    //   title,
-    //   text,
-    //   priority,
-    //   date_done,
-    //   status: false
-    // }
-    // console.log(todo)
+    // const navigate = useNavigate();
 
     const { data, error } = await supabase
       .from("todos")
@@ -43,7 +29,11 @@ export const useTodoStore = create((set, get) => ({
 
     if (!error) {
 // todo: add redirect to todolist
+
+
+      // navigate("/todo-list");
       console.log(1)
+      return 1
     }
   },
 }));

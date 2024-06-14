@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useTodoStore } from "../store/todo.js";
 import "./Create.css";
+import { useNavigate } from "react-router-dom";
+
 
 const Create = () => {
   const { addTodo } = useTodoStore(
@@ -30,8 +32,9 @@ const Create = () => {
     setDate(event.target.value);
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
+    const navigate = useNavigate();
     const todoItem = {
       title,
       text,
@@ -39,7 +42,10 @@ const Create = () => {
       date_done: date,
       status: false
     }
-    addTodo(todoItem)
+    const t = await addTodo(todoItem)
+    console.log('snhcikecnfk')
+    console.log(t)
+    navigate("/todo-list");
   };
 
   return (
