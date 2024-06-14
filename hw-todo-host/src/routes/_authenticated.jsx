@@ -4,7 +4,7 @@ export const Route = createFileRoute("/_authenticated")({
   beforeLoad: async ({ context }) => {
     const { isLogged } = context.authentication;
     if (!isLogged()) {
-      throw redirect({ to: "/login" });
+      throw redirect({ to: "/todo-auth" });
     }
   },
 });

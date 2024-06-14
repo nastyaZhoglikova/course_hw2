@@ -1,30 +1,16 @@
-import {createFileRoute, useRouter, useNavigate} from "@tanstack/react-router";
-// import {createClient} from "@supabase/supabase-js";
-import supabase from '../utils/supabase.js'
+import {createLazyFileRoute, redirect} from '@tanstack/react-router'
+import React from "react";
 
-export const Route = createFileRoute('/todo-auth')({
-  component: Login,
-});
+const TodoAuthLazy = React.lazy(() => import("auth/TodoAuth"));
 
-function Login() {
-  // const supabase = createClient(import.meta.env.VITE_SUPABASE_URL, import.meta.env.VITE_SUPABASE_KEY);
-  const router = useRouter();
-  const navigate = useNavigate();
-
+const TodoAuth = () => {
   return (
-    <div className="login-container">
-      <h2>Login</h2>
-      <>
-        <h3>Hello user!</h3>
-        <button
-          onClick={async () => {
-            const {error} = await supabase.auth.signOut();
-            router.invalidate();
-          }}
-        >
-          Sign out
-        </button>
-      </>
+    <div className="movies-container">
+      <TodoAuthLazy />
     </div>
   );
-}
+};
+
+export const Route = createLazyFileRoute("/todo-auth")({
+  component: TodoAuth,
+});

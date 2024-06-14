@@ -1,20 +1,23 @@
 import {createRootRoute, Link, Outlet} from '@tanstack/react-router';
 import {TanStackRouterDevtools} from '@tanstack/router-devtools';
 import '../index.css';
-import {useEffect, useState} from "react";
-import {Auth} from "@supabase/auth-ui-react";
-import {ThemeSupa} from "@supabase/auth-ui-shared";
+import React, {useEffect, useState} from "react";
 import supabase from '../utils/supabase.js'
 
 
+const AuthLazy = React.lazy(() => import("auth/TodoAuth"));
+
+const TodoAuth = () => {
+  return (
+    <div className="movies-container">
+      <AuthLazy />
+    </div>
+  );
+};
+
 export const Route = createRootRoute({
     component: () => {
-        const [session, setSession] = useState(null)
-
-      console.log(11111)
-      console.log(session)
-      // const supabase = createClient(, );
-
+      const [session, setSession] = useState(null)
 
       useEffect(() => {
             supabase.auth.getSession().then(({data: {session}}) => {
@@ -28,10 +31,10 @@ export const Route = createRootRoute({
             })
 
             return () => subscription.unsubscribe()
-        }, [])
+      }, [])
 
         if (!session) {
-            return (<Auth supabaseClient={supabase} appearance={{theme: ThemeSupa}}/>)
+            return (<TodoAuth/>)
         } else {
             return (
                 <>
