@@ -13,7 +13,6 @@ const initialState = {
 
 export const useTodoStore = create((set, get) => ({
   ...initialState,
-
   addTodo: async (todo) => {
     const { data, error } = await supabase
       .from("todos")
@@ -23,5 +22,29 @@ export const useTodoStore = create((set, get) => ({
     });
 
     return !error
+  },
+  updateTodo: async (todo) => {
+    const { data, error } = await supabase
+      .from("todos")
+      .update(todo)
+      .eq('id', todo.id);
+
+    return !error
+  },
+
+  getTodo: async (id) => {
+    set({ ...initialState, loading: true });
+
+      const { data, error } = await supabase
+        .from("todos")
+        .select()
+        .eq('id', id);
+
+      if (error) {
+        set({ ...initialState, error: true, errorData: error.message });
+        return null
+      }
+      else return data[0]
+
   },
 }));

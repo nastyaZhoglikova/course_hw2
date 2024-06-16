@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useTodoStore } from "../store/todo.js";
-import "./Create.css";
 import { useNavigate } from "react-router-dom";
 
 function Create ()  {
