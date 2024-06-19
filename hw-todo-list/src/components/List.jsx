@@ -1,8 +1,10 @@
 import React, { useEffect } from "react";
 import { useTodoListStore } from "../store/todo-list.js";
 import "./List.css";
+import {redirect} from '@tanstack/react-router'
 
-const List = () => {
+function List () {
+
   const { list, filter, getAll, orderByPriority, filterByPriority, finishItem, deleteItem } = useTodoListStore(
     (state) => ({
       list: state.data,
@@ -18,6 +20,10 @@ const List = () => {
   useEffect(() => {
     getAll();
   }, []);
+
+  const handleEditTodo = (id) => {
+    redirect(`todo-action/${id}`)
+  };
 
   return (
     <div>
@@ -66,6 +72,12 @@ const List = () => {
                 onClick={() => deleteItem(item.id)}
               >
                 Delete
+              </button>
+              <button
+                className="button"
+                onClick={() => handleEditTodo(item.id)}
+              >
+                Edit
               </button>
             </div>
           </div>

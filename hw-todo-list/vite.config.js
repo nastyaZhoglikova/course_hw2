@@ -12,7 +12,7 @@ export default defineConfig({
       exposes: {
         "./TodoList": "./src/App.jsx",
       },
-      shared: ["react", "react-dom", 'axios', 'zustand', '@supabase/supabase-js', 'react-router-dom'],
+      shared: ["react", "react-dom", 'axios', 'zustand', '@supabase/supabase-js', 'react-router-dom', '@tanstack/react-router'],
     }),
   ],
   build: {
