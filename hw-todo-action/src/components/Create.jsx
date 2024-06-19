@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useTodoStore } from "../store/todo.js";
 import { useNavigate } from "react-router-dom";
+import Form from './Form.jsx'
 
 function Create ()  {
   const navigate = useNavigate()
@@ -11,104 +12,31 @@ function Create ()  {
     })
   );
 
-  const [title, setTitle] = useState('');
-  const [text, setText] = useState('');
-  const [priority, setPriority] = useState('');
-  const [date, setDate] = useState('');
+  const [todo, setTodo] = useState({});
 
-  const handleTitleChange = (event) => {
-    setTitle(event.target.value);
-  };
-
-  const handleTextChange = (event) => {
-    setText(event.target.value);
-  };
-
-  const handlePriorityChange = (event) => {
-    setPriority(event.target.value);
-  };
-
-  const handleDateChange = (event) => {
-    setDate(event.target.value);
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setTodo((prevTodo) => ({...prevTodo, [name]: value }));
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const todoItem = {
-      title,
-      text,
-      priority,
-      date_done: date,
-      status: false
-    }
-    const isOK = await addTodo(todoItem)
+    const isOK = await addTodo(todo)
 
     isOK && navigate("/todo-list", { replace: true });
   };
 
   return (
     <div>
-      <div className="buttons-card">
-
-      </div>
-      <div className="todo-list">
+      <div>
         <div className="font-semibold text-left">
           Adding a new todo:
         </div>
-        <form onSubmit={handleSubmit}>
-          <div>
-            <input
-              placeholder="Title"
-              type="text"
-              name="title"
-              required
-              className="w-full rounded-md px-4 py-2 bg-inherit border mb-6"
-              onChange={handleTitleChange}
-              value={title}
-            />
-          </div>
-          <div>
-            <input
-              placeholder="Task"
-              type="text"
-              name="text"
-              required
-              className="w-full rounded-md px-4 py-2 bg-inherit border mb-6"
-              onChange={handleTextChange}
-              value={text}
-            />
-          </div>
-          <div>
-            <input
-              placeholder="Priority (1-5)"
-              type="number"
-              max="5"
-              min="1"
-              name="priority"
-              required
-              className="w-full rounded-md px-4 py-2 bg-inherit border mb-6"
-              onChange={handlePriorityChange}
-              value={priority}
-            />
-          </div>
-          <div>
-            <input
-              placeholder="Date"
-              type="date"
-              name="date"
-              required
-              className="w-full rounded-md px-4 py-2 bg-inherit border mb-6"
-              onChange={handleDateChange}
-              value={date}
-            />
-          </div>
-          <button
-            className="button"
-            type="submit"
-          >
-            Create
-          </button>
-        </form>
+        <Form
+          todo={todo}
+          handleSubmit={handleSubmit}
+          handleInputChange={handleInputChange}
+        />
       </div>
     </div>
 

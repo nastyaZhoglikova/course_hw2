@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
 import { useTodoListStore } from "../store/todo-list.js";
 import "./List.css";
-import {redirect} from '@tanstack/react-router'
+import {useNavigate} from '@tanstack/react-router'
 
 function List () {
-
+  const navigate = useNavigate()
   const { list, filter, getAll, orderByPriority, filterByPriority, finishItem, deleteItem } = useTodoListStore(
     (state) => ({
       list: state.data,
@@ -22,7 +22,9 @@ function List () {
   }, []);
 
   const handleEditTodo = (id) => {
-    redirect(`todo-action/${id}`)
+    navigate({
+      to: `/todo-action/${id}`
+    })
   };
 
   return (
