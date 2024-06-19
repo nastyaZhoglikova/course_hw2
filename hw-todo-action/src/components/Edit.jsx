@@ -3,11 +3,10 @@ import { useTodoStore } from "../store/todo.js";
 import { useNavigate, useParams } from "react-router-dom";
 import Form from './Form.jsx'
 
-function Edit ()  {
-  const navigate = useNavigate()
+function EditComponent ()  {
+  const navigate = useNavigate();
   const { id } = useParams();
 
-  console.log(11111, ' ',id)
   const [todo, setTodo] = useState({});
   const { getTodo, updateTodo, errorMsg } = useTodoStore(
     (state) => ({
@@ -18,6 +17,7 @@ function Edit ()  {
   );
 
   useEffect(async () => {
+    console.log(11111, ' ',id)
     const todoItem = await getTodo(id);
     todoItem && setTodo(todoItem);
   }, [id]);
@@ -60,4 +60,4 @@ function Edit ()  {
   );
 };
 
-export default Edit;
+export default EditComponent;

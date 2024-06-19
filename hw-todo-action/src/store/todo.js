@@ -33,6 +33,7 @@ export const useTodoStore = create((set, get) => ({
   },
 
   getTodo: async (id) => {
+    console.log(2222, id)
     set({ ...initialState, loading: true });
 
       const { data, error } = await supabase

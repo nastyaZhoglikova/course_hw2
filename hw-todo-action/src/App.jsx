@@ -10,10 +10,10 @@ import './App.css';
 
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/todo-action">
       <Routes>
-        <Route path="/todo-action" element={<Root />} />
-        <Route path="/todo-action/:id" element={<Edit />} />
+        <Route path="/edit/:id*" element={<Edit />} />
+        <Route path="/create" element={<Root />} />
       </Routes>
     </BrowserRouter>
   )

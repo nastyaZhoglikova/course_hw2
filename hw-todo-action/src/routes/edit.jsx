@@ -1,10 +1,13 @@
-import Edit from '../components/Edit.jsx'
+import EditComponent from '../components/Edit.jsx'
 import '../App.css'
+import {useLocation} from 'react-router-dom'
 
-function Root() {
+function Edit() {
+  const location = useLocation()
+  console.log(location)
   return (
     <>
-      <Edit />
+      <EditComponent />
     </>
   )
 }
