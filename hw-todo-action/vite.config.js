@@ -10,9 +10,9 @@ export default defineConfig({
       name: "todoAction",
       filename: "todoActionRemoteEntry.js",
       exposes: {
-        "./TodoAction": "./src/routes/root.jsx",
+        "./TodoAction": "./src/App.jsx",
       },
-      shared: ["react", "react-dom", 'axios', 'zustand', '@supabase/supabase-js', 'react-router-dom'],
+      shared: ["react", "react-dom", 'axios', 'zustand', '@supabase/supabase-js', 'react-router-dom', 'react-dom/client'],
     }),
   ],
   build: {
