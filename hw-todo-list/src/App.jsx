@@ -1,12 +1,19 @@
-import TodoList from './TodoList.jsx';
-import './App.css'
+import { MemoryRouter, Routes, Route } from "react-router-dom";
+import TodoList from './TodoList.jsx'
+import React, { createContext } from "react";
 
-function App() {
+export const NavigationContext = createContext(undefined);
+
+const App = ({ onNavigate }) => {
   return (
-    <div>
-      <TodoList />
-    </div>
-  )
-}
+    <MemoryRouter>
+      <NavigationContext.Provider value={{ onNavigate }}>
+        <Routes>
+          <Route path="/" element={<TodoList />} />
+        </Routes>
+      </NavigationContext.Provider>
+    </MemoryRouter>
+  );
+};
 
-export default App
+export default App;

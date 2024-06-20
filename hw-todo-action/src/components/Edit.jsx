@@ -1,11 +1,10 @@
 import React, {useEffect, useState} from 'react'
 import { useTodoStore } from "../store/todo.js";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import Form from './Form.jsx'
 
-function EditComponent ()  {
+function EditComponent (params)  {
   const navigate = useNavigate();
-  const { id } = useParams();
 
   const [todo, setTodo] = useState({});
   const { getTodo, updateTodo, errorMsg } = useTodoStore(
@@ -17,10 +16,9 @@ function EditComponent ()  {
   );
 
   useEffect(async () => {
-    console.log(11111, ' ',id)
-    const todoItem = await getTodo(id);
+    const todoItem = await getTodo(params.todoId);
     todoItem && setTodo(todoItem);
-  }, [id]);
+  }, [params]);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -34,6 +32,10 @@ function EditComponent ()  {
     isOK && navigate("/todo-list", { replace: true });
   };
 
+  const handleToAddTodo = () => {
+    navigate("/todo-action", { replace: true });
+  };
+
   return (
     <div>
       <div className="buttons-card">
@@ -45,8 +47,8 @@ function EditComponent ()  {
       { !errorMsg && (
         <div>
           <div className="font-semibold text-left">
-            Edit todo with id {id}:
-          </div>
+            Edit todo with id {params.todoId}:
+          </div>v
           <Form
             todo={todo}
             handleSubmit={handleSubmit}

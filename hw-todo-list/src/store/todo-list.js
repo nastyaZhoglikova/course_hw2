@@ -36,7 +36,7 @@ export const useTodoListStore = create((set, get) => ({
     }
   },
   orderListByPriority: async () => {
-    set({ ...initialState, order: 'priority' });
+    set({ ...initialState, order: 'priority', filter: 'id' });
 
     try {
       const { data } = await supabase
@@ -44,7 +44,7 @@ export const useTodoListStore = create((set, get) => ({
         .select()
         .order('priority', { ascending: false });
 
-      set({ ...initialState, success: true, data });
+      set({ success: true, data });
 
     } catch (err) {
       console.error("Error in data fetch:", err);
@@ -60,7 +60,7 @@ export const useTodoListStore = create((set, get) => ({
         .select()
         .eq('status', true)
 
-      set({ ...initialState, success: true, data });
+      set({success: true, data });
 
     } catch (err) {
       console.error("Error in data fetch:", err);

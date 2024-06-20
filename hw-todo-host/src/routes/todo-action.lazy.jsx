@@ -5,7 +5,7 @@ const TodoActionLazy = React.lazy(() => import("action/TodoAction"));
 
 const TodoAction = () => {
   return (
-    <div className="movies-container">
+    <div className="page-container">
       <TodoActionLazy />
     </div>
   );

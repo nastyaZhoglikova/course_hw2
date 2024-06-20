@@ -1,12 +1,21 @@
-import {createLazyFileRoute, redirect} from '@tanstack/react-router'
+import {createLazyFileRoute, redirect, useNavigate} from '@tanstack/react-router'
 import React from "react";
 
 const TodoListLazy = React.lazy(() => import("list/TodoList"));
 
 const TodoList = () => {
+  const navigate = useNavigate();
+
   return (
-    <div className="movies-container">
-      <TodoListLazy />
+    <div className="page-container">
+      <TodoListLazy
+        onNavigate={(to, search) =>
+
+          navigate({
+            to, search
+          })
+        }
+      />
     </div>
   );
 };

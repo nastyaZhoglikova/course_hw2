@@ -1,16 +1,17 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useContext } from "react";
 import { useTodoListStore } from "../store/todo-list.js";
 import "./List.css";
-import {useNavigate} from '@tanstack/react-router'
+import { NavigationContext } from '../App.jsx'
 
 function List () {
-  const navigate = useNavigate()
-  const { list, filter, getAll, orderByPriority, filterByPriority, finishItem, deleteItem } = useTodoListStore(
+  const onNavigateContext = useContext(NavigationContext);
+  const { list, filter, order, getAll, orderByPriority, filterByStatus, finishItem, deleteItem } = useTodoListStore(
     (state) => ({
       list: state.data,
+      order: state.order,
       filter: state.filter,
       orderByPriority: state.orderListByPriority,
-      filterByPriority: state.filerListByStatus,
+      filterByStatus: state.filerListByStatus,
       finishItem: state.finishedTodo,
       deleteItem: state.deleteTodo,
       getAll: state.execute,
@@ -22,25 +23,26 @@ function List () {
   }, []);
 
   const handleEditTodo = (id) => {
-    navigate({
-      to: `/todo-action/${id}`
-    })
+    // Тут має бути нормальне присвоювання параметрів через .search({id}) чи шось схоже, але в мене не вийшло
+    onNavigateContext?.onNavigate(`/todo-action/?id=${id}`)
   };
 
   return (
     <div>
       <div className="buttons-card">
+        <div>All todo: {list?.length}</div>
+        <div>Finished todo: {list?.filter(i => i.status).length}</div>
         <button
-          className="button"
+          className={order === 'priority' ? 'active button' : 'button'}
           onClick={() => orderByPriority()}
         >
           Order By Priority
         </button>
         <button
-          className={filter !== 'id' ? 'active button' : 'button'}
-          onClick={() => filterByPriority()}
+          className={filter === 'status' ? 'active button' : 'button'}
+          onClick={() => filterByStatus()}
         >
-          Show finished {filter}
+          Show finished
         </button>
         <button
           className={filter === 'id' ? 'active button' : 'button'}

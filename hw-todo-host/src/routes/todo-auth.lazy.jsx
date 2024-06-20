@@ -5,7 +5,7 @@ const TodoAuthLazy = React.lazy(() => import("auth/TodoAuth"));
 
 const TodoAuth = () => {
   return (
-    <div className="movies-container">
+    <div className="page-container">
       <TodoAuthLazy />
     </div>
   );
