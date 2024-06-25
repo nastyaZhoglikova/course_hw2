@@ -24,7 +24,7 @@ function List () {
 
   const handleEditTodo = (id) => {
     // Тут має бути нормальне присвоювання параметрів через .search({id}) чи шось схоже, але в мене не вийшло
-    onNavigateContext?.onNavigate(`/todo-action/?id=${id}`)
+    onNavigateContext?.onNavigate(`/todo-action?id=${id}`)
   };
 
   return (

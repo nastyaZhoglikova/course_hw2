@@ -11,9 +11,12 @@ export default defineConfig({
     federation({
       name: "host-app",
       remotes: {
-        list: "https://hw-todo-list.vercel.app/assets/todoListRemoteEntry.js",
-        auth: "https://hw-todo-auth.vercel.app/assets/todoAuthRemoteEntry.js",
-        action: "https://hw-todo-action.vercel.app/assets/todoActionRemoteEntry.js",
+        list: "http://localhost:5172/assets/todoListRemoteEntry.js",
+        auth: "http://localhost:5171/assets/todoAuthRemoteEntry.js",
+        action: "http://localhost:5173/assets/todoActionRemoteEntry.js",
+        // list: "https://hw-todo-list.vercel.app/assets/todoListRemoteEntry.js",
+        // auth: "https://hw-todo-auth.vercel.app/assets/todoAuthRemoteEntry.js",
+        // action: "https://hw-todo-action.vercel.app/assets/todoActionRemoteEntry.js",
       },
       shared: ["react", "react-dom", "@supabase/auth-ui-react", "@supabase/supabase-js", 'zustand', 'axios'],
     }),
