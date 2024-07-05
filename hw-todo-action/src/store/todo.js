@@ -1,8 +1,6 @@
 import { create } from "zustand";
 import supabase from '../utils/supabase.js'
 
-const BASE_URL = import.meta.env.VITE_BASE_URL;
-
 const initialState = {
   loading: false,
   success: false,
@@ -14,6 +12,8 @@ const initialState = {
 export const useTodoStore = create((set, get) => ({
   ...initialState,
   addTodo: async (todo) => {
+    set({ ...initialState, loading: true });
+
     const { data, error } = await supabase
       .from("todos")
       .insert({
@@ -21,14 +21,18 @@ export const useTodoStore = create((set, get) => ({
       created_at: new Date().toISOString(),
     });
 
+    set({ ...initialState, loading: false, success: !error });
+
     return !error
   },
   updateTodo: async (todo) => {
+    set({ ...initialState, loading: true });
     const { data, error } = await supabase
       .from("todos")
       .update(todo)
       .eq('id', todo.id);
 
+    set({ ...initialState, loading: false, success: !error });
     return !error
   },
 
@@ -40,7 +44,9 @@ export const useTodoStore = create((set, get) => ({
         .select()
         .eq('id', id);
 
-      if (error) {
+    set({ loading: false });
+
+    if (error) {
         set({ ...initialState, error: true, errorData: error.message });
         return null
       }

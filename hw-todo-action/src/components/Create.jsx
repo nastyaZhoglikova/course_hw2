@@ -6,9 +6,12 @@ import Form from './Form.jsx'
 function Create ()  {
   const navigate = useNavigate()
 
-  const { addTodo } = useTodoStore(
+  const { addTodo, loading, success, error } = useTodoStore(
     (state) => ({
-      addTodo: state.addTodo
+      addTodo: state.addTodo,
+      loading: state.loading,
+      success: state.success,
+      error: state.errorData,
     })
   );
 
@@ -16,14 +19,15 @@ function Create ()  {
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
+
     setTodo((prevTodo) => ({...prevTodo, [name]: value }));
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const isOK = await addTodo(todo)
 
-    isOK && navigate("/todo-list", { replace: true });
+    await addTodo(todo)
+
   };
 
   return (
@@ -36,6 +40,9 @@ function Create ()  {
           todo={todo}
           handleSubmit={handleSubmit}
           handleInputChange={handleInputChange}
+          success={success}
+          loading={loading}
+          error={error}
         />
       </div>
     </div>

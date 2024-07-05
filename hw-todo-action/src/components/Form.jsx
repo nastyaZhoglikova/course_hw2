@@ -43,7 +43,7 @@ function Form (props)  {
             <input
               placeholder="Date"
               type="date"
-              name="date"
+              name="date_done"
               required
               className="w-full rounded-md px-4 py-2 bg-inherit border mb-6"
               onChange={props.handleInputChange}
@@ -53,10 +53,21 @@ function Form (props)  {
           <button
             className="button"
             type="submit"
+            disabled={props.loading}
           >
-            Submit
+            { props.loading ? 'Loading...' : 'Submit'}
           </button>
         </form>
+        {
+          props.success && (
+            <div>Request successful!</div>
+          )
+        }
+        {
+          props.error && (
+            <div>{ props.error }</div>
+          )
+        }
       </div>
     </div>
 

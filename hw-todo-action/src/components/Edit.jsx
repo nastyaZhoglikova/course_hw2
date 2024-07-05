@@ -1,17 +1,19 @@
 import React, {useEffect, useState} from 'react'
 import { useTodoStore } from "../store/todo.js";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Form from './Form.jsx'
 
 function EditComponent (params)  {
   const navigate = useNavigate();
 
   const [todo, setTodo] = useState({});
-  const { getTodo, updateTodo, errorMsg } = useTodoStore(
+  const { getTodo, updateTodo, error, loading, success } = useTodoStore(
     (state) => ({
       getTodo: state.getTodo,
       updateTodo: state.updateTodo,
-      errorMsg: state.errorData
+      loading: state.loading,
+      success: state.success,
+      error: state.errorData,
     })
   );
 
@@ -22,40 +24,31 @@ function EditComponent (params)  {
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
+
     setTodo((prevTodo) => ({...prevTodo, [name]: value }));
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const isOK = await updateTodo(todo)
-
-    isOK && navigate("/todo-list", { replace: true });
-  };
-
-  const handleToAddTodo = () => {
-    navigate("/todo-action", { replace: true });
+    await updateTodo(todo)
   };
 
   return (
     <div>
-      <div className="buttons-card">
-        <div>
-          { errorMsg }
-        </div>
-        <div></div>
-      </div>
-      { !errorMsg && (
-        <div>
+      <div>
           <div className="font-semibold text-left">
             Edit todo with id {params.todoId}:
-          </div>v
+          </div>
           <Form
             todo={todo}
             handleSubmit={handleSubmit}
             handleInputChange={handleInputChange}
+            success={success}
+            loading={loading}
+            error={error}
           />
         </div>
-      )}
+
 
     </div>
 

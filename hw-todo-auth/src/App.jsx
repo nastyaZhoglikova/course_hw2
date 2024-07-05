@@ -22,7 +22,11 @@ function App() {
   }, [])
 
   if (!session) {
-    return (<Auth supabaseClient={supabase} appearance={{theme: ThemeSupa}}/>)
+    return (<Auth
+      supabaseClient={supabase}
+      appearance={{theme: ThemeSupa}}
+      providers={[]}
+    />)
   } else {
     return (
       <div className="login-container">
