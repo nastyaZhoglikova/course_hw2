@@ -11,6 +11,9 @@ const initialState = {
 
 export const useTodoStore = create((set, get) => ({
   ...initialState,
+  setDefaultState: () => {
+    set({ ...initialState });
+  },
   addTodo: async (todo) => {
     set({ ...initialState, loading: true });
 
