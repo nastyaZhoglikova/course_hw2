@@ -1,11 +1,8 @@
 import React, {useEffect, useState} from 'react'
 import { useTodoStore } from "../store/todo.js";
-import { useNavigate } from "react-router-dom";
 import Form from './Form.jsx'
 
 function EditComponent (params)  {
-  const navigate = useNavigate();
-
   const [todo, setTodo] = useState({});
   const { getTodo, updateTodo, error, loading, success } = useTodoStore(
     (state) => ({
@@ -17,9 +14,14 @@ function EditComponent (params)  {
     })
   );
 
-  useEffect(async () => {
-    const todoItem = await getTodo(params.todoId);
-    todoItem && setTodo(todoItem);
+  useEffect(() => {
+    async function fetchTodoItem() {
+      if (params.todoId) {
+        const todoItem = await getTodo(params.todoId);
+        todoItem && setTodo(todoItem);
+      }
+    }
+    fetchTodoItem();
   }, [params]);
 
   const handleInputChange = (event) => {
@@ -48,8 +50,6 @@ function EditComponent (params)  {
             error={error}
           />
         </div>
-
-
     </div>
 
   );
