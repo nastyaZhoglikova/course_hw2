@@ -1,8 +1,16 @@
-# React + Vite
+# Домашка 2
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## hw-todo-host
 
-Currently, two official plugins are available:
+Головний mfe 
+## hw-todo-list
+Дочірній mfe зі списком тудушок
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## hw-todo-auth
+Дочірній mfe з авторищацією
+
+## hw-todo-action
+Дочірній mfe зі створенням або редагуванням
+- react-routing-dom
+
+В цьому (hw-todo-action) проекті і є проблема
